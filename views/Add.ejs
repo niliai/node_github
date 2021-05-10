@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../stylesheet/accueil.css">
+    <title> Ajouter une série</title>
+</head>
+
+<body>
+    <header>
+        <h1>Ajouter une série</h1>
+    </header>
+
+    <main>
+        <form>
+            <div class ="form-control">
+                <label>Nom :</label>
+                <input type="text" v-model="text" name="text" placeholder="Prison Break"/>
+                </div>
+            <div class ="form-control">
+                <label>Description :</label>
+                <input type="text" v-model="description" name="description" placeholder="Son frère injustement accusé de meurtre, un ingénieur en génie civil décide de le faire évader de prison."/>
+                </div>
+            <div class ="form-control">
+            <label>Ajouter une image</label>
+            <input type="file" id="myFile" name="filename">
+            </div>
+            <div>
+                <button class="btnform"> Ajouter </button>
+                <input type="reset" value="Annuler" class="btncancel">
+            </div>
+    </form>
+</body>
+
+<footer>
+    <footer>
+        <p>Copyright &copy; 2021 Alicia Decruyenaere</p>
+    </footer>
+</footer>
+
+</html>
