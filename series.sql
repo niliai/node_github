@@ -6,7 +6,7 @@ CREATE TABLE users(
     type INT NOT NULL
 );
 
-INSERT INTO users VALUES(1, "admin" ,useruseruserusersusersusers1);
+INSERT INTO users VALUES(1, "admin" ,1);
 INSERT INTO users VALUES(2, "visitor" ,2);
 
 CREATE table serie (

@@ -35,7 +35,7 @@ exports.serieNew = (req, res) => {
             console.log(err);
             res.status(400).json({'message': err});
         }
-            res.status(200).json({'message': 'Merci pour ton ajout{'});
+            res.status(200).json(resultSQL);
     });
 };
 
@@ -51,9 +51,9 @@ exports.serieFormUpdate = (req, res) => {
 };
 
 exports.serieUpdate = (req, res) => {
-    connection.query("UPDATE serie SET description='"+req.body.description+"' WHERE idSerie = "+req.params.id, function(err,resultSQL){
+    connection.query("UPDATE serie SET description='"+req.body.description+"', titre='"+req.body.titre+"' WHERE idSerie = "+req.params.id, function(err,resultSQL){
         if (err) {
-            res.statuts(400).json({'message' : err});
+            res.status(400).json({'message' : err});
          } else{
          res.status(200).json(resultSQL);
      }
@@ -61,9 +61,10 @@ exports.serieUpdate = (req, res) => {
  };
 
 exports.serieDelete = (req, res) => {
-    connection.query("DELETE FROM serie WHERE idserie = ?"+req.params.id, function(err, resultSQL) {
+    console.log(req.params)
+    connection.query("DELETE FROM serie WHERE idserie = "+req.params.id, function(err, resultSQL) {
         if (err) {
-           res.statuts(400).json({'message' : err});
+           res.status(400).json({'message' : err});
         } else{
         res.status(200).json(resultSQL);
     }
@@ -71,7 +72,7 @@ exports.serieDelete = (req, res) => {
 };
 
 exports.userFormNew = (req, res) => {
-    connection.query("INSERT INTO user (pseudo, idUser) VALUES ('"+req.body.pseudo+"', '"+req.body.idUser+"')", function (err,resultSQL){
+    connection.query("INSERT INTO users (pseudo) VALUES ('"+req.body.pseudo+"')", function (err,resultSQL){
         if(err){
             res.status(400).json ({'message ' : err});
         } else {
@@ -81,7 +82,7 @@ exports.userFormNew = (req, res) => {
 };
 
 exports.userNew = (req, res) => {
-    connection.query("INSERT INTO user (pseudo, idUser) VALUES ('"+req.body.pseudo+"', '"+req.body.idUser+"')", function (err,resultSQL){
+    connection.query("INSERT INTO users (pseudo) VALUES ('"+req.body.pseudo+"')", function (err,resultSQL){
         if(err){
             res.status(400).json ({'message ' : err});
         } else {
@@ -92,7 +93,7 @@ exports.userNew = (req, res) => {
 
 exports.serie = (req, res) => {
 
-    connection.query("INSERT INTO user (pseudo, idUser) VALUES ('"+req.body.pseudo+"', '"+req.body.idUser+"')", function (err,resultSQL){
+    connection.query("SELECT * FROM serie WHERE  idserie = "+req.params.id, function (err,resultSQL){
         if(err){
             res.status(400).json ({'message ' : err});
         } else {
@@ -100,3 +101,66 @@ exports.serie = (req, res) => {
         }
     })
 };
+
+exports.userList = (req, res) => {
+    connection.query("SELECT * FROM users", function(err,resultSQL){
+        if(err) {
+            console.log(err)
+            res.status(400).json({'message' : err});
+        }
+            else{
+                res.status(200).json(resultSQL);
+            }
+        });
+};
+
+exports.userDelete = (req, res) => {
+    console.log(req.params)
+    connection.query("DELETE FROM users WHERE idUser = "+req.params.id, function(err, resultSQL) {
+        if (err) {
+           res.status(400).json({'message' : err});
+        } else{
+        res.status(200).json(resultSQL);
+    }
+    });
+};
+
+exports.userLike = (req, res) => {
+    let usersLike = [];
+    req.body.forEach(u => {
+        usersLike.push([u.SerieId,u.UserId]);
+    });
+    let sqlStatement = "INSERT INTO userserie(SerieId,UserId) VALUES ? ;";
+    connection.query(sqlStatement,[usersLike],function(error, resultSQL){
+        if(error){
+
+            res.status(400).json({'message' : error});
+
+        }
+
+        else{
+
+            res.status(200).json(resultSQL);
+
+        }
+
+    }); 
+    };
+
+    exports.likeList = (req, res) => {
+        let idSerie = req.params.id;
+
+        connection.query("SELECT u.* FROM users u INNER JOIN userserie s ON u.idUser = s.UserId WHERE s.SerieId = ?;", idSerie, function(error, resultSQL){
+            if(error){
+                res.status(400).json({'message' : error});
+
+            }
+    
+            else{
+    
+                res.status(200).json(resultSQL);
+    
+            }
+    
+        }); 
+    };
