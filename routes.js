@@ -3,6 +3,8 @@ let Controllers = require('./controllers/Controllers')
 let ApiControllers = require('./controllers/ApiControllers');
 let router = express.Router();
 
+//* MVC */
+
 //**api**/ 
 router.get("/api/serie", ApiControllers.serieList);
 router.post('/api/serie/add', ApiControllers.serieNew);

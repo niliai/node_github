@@ -4,6 +4,7 @@ let userserie = require('../models/userserieModel');
 let connection = require('../db');
 const { express } = require('express');
 
+//Affichage des séries présentes dans le BDD
 exports.serieList = (req, res) => {
     connection.query("SELECT * FROM serie", function(err,resultSQL){
         if(err) {
@@ -15,7 +16,7 @@ exports.serieList = (req, res) => {
             }
         });
 };
-
+//Affichage des séries présentes dans le BDD
 exports.serieFormNew = (req, res) => {
     connection.query("SELECT * FROM serie", function(err,resultSQL){
         if(err) {
@@ -27,6 +28,7 @@ exports.serieFormNew = (req, res) => {
         });
 };
 
+//Ajout d'une série
 exports.serieNew = (req, res) => {
     let serie = {"Titre": req.body.titre, "Description": req.body.description};
     console.log(serie)
@@ -39,6 +41,7 @@ exports.serieNew = (req, res) => {
     });
 };
 
+// Ajout d'une série via le formulaire
 exports.serieFormUpdate = (req, res) => {
     let idSerie = req.params.idSerie;
     connection.query("INSERT INTO serie (titre, descriptions) VALUES ('"+req.body.titre+"', '"+req.body.description+"')", function (err,resultSQL){
@@ -49,7 +52,7 @@ exports.serieFormUpdate = (req, res) => {
         }
     })
 };
-
+// Modifier une série
 exports.serieUpdate = (req, res) => {
     connection.query("UPDATE serie SET description='"+req.body.description+"', titre='"+req.body.titre+"' WHERE idSerie = "+req.params.id, function(err,resultSQL){
         if (err) {
@@ -60,6 +63,7 @@ exports.serieUpdate = (req, res) => {
      });
  };
 
+// Supprimer une série
 exports.serieDelete = (req, res) => {
     console.log(req.params)
     connection.query("DELETE FROM serie WHERE idserie = "+req.params.id, function(err, resultSQL) {
@@ -71,6 +75,7 @@ exports.serieDelete = (req, res) => {
     });
 };
 
+// Ajout d'un utilisateur via le formulaire
 exports.userFormNew = (req, res) => {
     connection.query("INSERT INTO users (pseudo) VALUES ('"+req.body.pseudo+"')", function (err,resultSQL){
         if(err){
@@ -80,7 +85,7 @@ exports.userFormNew = (req, res) => {
         }
     })
 };
-
+// Ajout d'un nouvel utilisateur
 exports.userNew = (req, res) => {
     connection.query("INSERT INTO users (pseudo) VALUES ('"+req.body.pseudo+"')", function (err,resultSQL){
         if(err){
@@ -125,6 +130,7 @@ exports.userDelete = (req, res) => {
     });
 };
 
+// Ajout de la liaison série/likeur
 exports.userLike = (req, res) => {
     let usersLike = [];
     req.body.forEach(u => {
@@ -133,13 +139,9 @@ exports.userLike = (req, res) => {
     let sqlStatement = "INSERT INTO userserie(SerieId,UserId) VALUES ? ;";
     connection.query(sqlStatement,[usersLike],function(error, resultSQL){
         if(error){
-
             res.status(400).json({'message' : error});
-
         }
-
         else{
-
             res.status(200).json(resultSQL);
 
         }
@@ -153,13 +155,9 @@ exports.userLike = (req, res) => {
         connection.query("SELECT u.* FROM users u INNER JOIN userserie s ON u.idUser = s.UserId WHERE s.SerieId = ?;", idSerie, function(error, resultSQL){
             if(error){
                 res.status(400).json({'message' : error});
-
             }
-    
             else{
-    
                 res.status(200).json(resultSQL);
-    
             }
     
         }); 
