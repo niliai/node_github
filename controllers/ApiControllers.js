@@ -96,6 +96,7 @@ exports.userNew = (req, res) => {
     })
 };
 
+// connection entre les séries et les likeurs
 exports.serie = (req, res) => {
 
     connection.query("SELECT * FROM serie WHERE  idserie = "+req.params.id, function (err,resultSQL){
@@ -119,6 +120,7 @@ exports.userList = (req, res) => {
         });
 };
 
+// Supprimer un utilisateur
 exports.userDelete = (req, res) => {
     console.log(req.params)
     connection.query("DELETE FROM users WHERE idUser = "+req.params.id, function(err, resultSQL) {

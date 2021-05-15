@@ -1,6 +1,4 @@
-let Users = require('../models/usersModel');
 let serie = require('../models/serieModel');
-let userserie = require('../models/userserieModel');
 let connection = require('../db');
 const { express } = require('express');
 
