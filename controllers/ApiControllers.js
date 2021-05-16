@@ -138,6 +138,7 @@ exports.userLike = (req, res) => {
     req.body.forEach(u => {
         usersLike.push([u.SerieId,u.UserId]);
     });
+    connection.query("DELETE from userserie where Serieid = "+req.body[0].SerieId)
     let sqlStatement = "INSERT INTO userserie(SerieId,UserId) VALUES ? ;";
     connection.query(sqlStatement,[usersLike],function(error, resultSQL){
         if(error){
