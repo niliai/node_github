@@ -1,8 +1,6 @@
 let express = require('express');
 // Controllers NodeJs //
-let ControllersSerie = require('./controllers/ControllersSerie')
-let ControllersUsers = require('./controllers/ControllersUsers')
-let ControllersUserserie = require('./controllers/ControllersUserseries')
+
 // Controller API// 
 let ApiControllers = require('./controllers/ApiControllers');
 
